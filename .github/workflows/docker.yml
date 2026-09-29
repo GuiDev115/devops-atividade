@@ -49,8 +49,8 @@ jobs:
 
       - name: Test image
         run: |
-          docker run -d -p 3000:3000 --name test-app \
-            ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:latest
+          IMAGE_REF=$(echo "ghcr.io/${{ github.repository }}" | tr '[:upper:]' '[:lower:]')
+          docker run -d -p 3000:3000 --name test-app ${IMAGE_REF}:latest
           sleep 3
           curl -f http://localhost:3000/hello
           docker stop test-app
