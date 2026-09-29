@@ -49,8 +49,8 @@ jobs:
 
       - name: Test image
         run: |
-          IMAGE_REF=$(echo "ghcr.io/${{ github.repository }}" | tr '[:upper:]' '[:lower:]')
-          docker run -d -p 3000:3000 --name test-app ${IMAGE_REF}:latest
+          FIRST_TAG=$(echo "$DOCKER_METADATA_OUTPUT_TAGS" | head -1)
+          docker run -d -p 3000:3000 --name test-app "$FIRST_TAG"
           sleep 3
           curl -f http://localhost:3000/hello
           docker stop test-app
